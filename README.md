@@ -135,40 +135,25 @@ Crea un archivo  en la raíz (o exporta las variables):
 ## 🧪 Cómo ejecutar la suite de tests
 
 ### Local (entorno virtual activado)
-Found 36 test(s).
-System check identified no issues (0 silenced).
-Name                                                                           Stmts   Miss  Cover   Missing
-------------------------------------------------------------------------------------------------------------
-core/__init__.py                                                                   0      0   100%
-core/admin.py                                                                     43     16    63%   67-69, 75, 80, 85-101, 106, 112
-core/api_serializers.py                                                           49     31    37%   38-40, 44-46, 50-52, 56-66, 70-80, 85
-core/api_urls.py                                                                   6      0   100%
-core/api_views.py                                                                 44     25    43%   30-44, 52-62, 70-71
-core/apps.py                                                                       3      0   100%
-core/forms.py                                                                     27      4    85%   110-113
-core/migrations/0001_initial.py                                                    5      0   100%
-core/migrations/0002_alter_producto_nombre_alter_producto_precio_and_more.py       5      0   100%
-core/migrations/0003_producto_eliminado_en_producto_slug.py                        4      0   100%
-core/migrations/__init__.py                                                        0      0   100%
-core/models.py                                                                    59     15    75%   10, 13, 16, 70, 75, 80, 89-90, 98-100, 104-105, 108-109
-core/tests.py                                                                    157     85    46%   29-34, 39, 44-49, 54-55, 78-80, 150-151, 165-169, 173-176, 180-189, 193-196, 200-207, 211-214, 218-220, 224-227, 231-241, 245-252, 256-259, 263-275, 279-282, 286-289
-core/tests_api.py                                                                 82     61    26%   21, 26-33, 37-43, 47-58, 62-67, 71-75, 79-89, 93-98, 102-107, 111-117, 121-125
-core/urls.py                                                                       5      0   100%
-core/views.py                                                                     74     31    58%   28-49, 53-57, 83-84, 88-89, 104-105, 108-109, 113-115, 131-132
-manage.py                                                                         11      2    82%   12-13
-myproject/__init__.py                                                              0      0   100%
-myproject/asgi.py                                                                  4      4     0%   10-16
-myproject/settings/__init__.py                                                     2      0   100%
-myproject/settings/base.py                                                        17      0   100%
-myproject/settings/development.py                                                  5      0   100%
-myproject/settings/production.py                                                  18     18     0%   4-55
-myproject/urls.py                                                                  3      0   100%
-myproject/wsgi.py                                                                  4      4     0%   10-16
-------------------------------------------------------------------------------------------------------------
-TOTAL                                                                            627    296    53%
+```bash
+# Todos los tests (core + core.tests_api)
+python manage.py test --verbosity=2
+
+# Solo tests de modelos/forms/vistas
+python manage.py test core.tests --verbosity=2
+
+# Solo tests de API REST
+python manage.py test core.tests_api --verbosity=2
+
+# Con cobertura (requiere: pip install coverage)
+coverage run --source='.' manage.py test
+coverage report -m          # Resumen en terminal
+coverage html               # Reporte HTML en htmlcov/index.html
 
 ### En Docker
-
+docker compose exec web python manage.py test --verbosity=2
+docker compose exec web coverage run --source='.' manage.py test
+docker compose exec web coverage report -m
 
 ### Qué validan los tests (resumen)
 | Categoría | Casos clave |
@@ -266,7 +251,7 @@ Este proyecto está bajo la licencia **MIT** — ver archivo [LICENSE](LICENSE) 
 
 - **Issues**: [GitHub Issues](https://github.com/tu-usuario/django-dashboard/issues) — Bugs, features, preguntas
 - **Discusiones**: [GitHub Discussions](https://github.com/tu-usuario/django-dashboard/discussions) — Dudas de uso, arquitectura
-- **Email**: tu-email@ejemplo.com
+- **Email**: gonzaleznazareno@abc.gob.ar
 
 ---
 
@@ -277,4 +262,4 @@ Este proyecto está bajo la licencia **MIT** — ver archivo [LICENSE](LICENSE) 
 ---
 
 **Desarrollado con ❤️ usando Django 6 + DRF + Docker**  
-*Última actualización: 2025*
+*Última actualización: 2026*
