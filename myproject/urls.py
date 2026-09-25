@@ -8,6 +8,7 @@ from django.contrib import admin
 from django.urls import path, include  # include permite incluir URLs de otras apps
 
 urlpatterns = [
-    path('admin/', admin.site.urls),           # Panel de administración de Django
-    path('', include('core.urls')),            # Incluye las URLs de la app 'core' en la raíz
+    path('admin/', admin.site.urls),                       # Panel de administración de Django
+    path('', include('core.urls')),                        # URLs del sitio web principal
+    path('api/', include('core.api_urls')),                # 🚀 API REST - Endpoint /api/productos/
 ]
