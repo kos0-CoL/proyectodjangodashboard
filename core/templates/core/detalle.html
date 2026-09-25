@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ producto.nombre }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">📦 Detalle: {{ producto.nombre }}</h4>
+                <span class="badge {% if producto.activo %}bg-success{% else %}bg-secondary{% endif %}">
+                    {% if producto.activo %}Activo{% else %}Inactivo{% endif %}
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong class="text-muted">Precio:</strong>
+                        <div class="display-6">${{ producto.precio }}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <strong class="text-muted">Stock:</strong>
+                        <div class="display-6">
+                            <span class="badge {% if producto.hay_stock %}bg-success{% else %}bg-danger{% endif %} fs-6">
+                                {{ producto.stock }} unidades
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="mb-3">
+                    <strong class="text-muted">Descripción:</strong>
+                    <div class="mt-2 {% if not producto.descripcion %}text-muted fst-italic{% endif %}">
+                        {{ producto.descripcion|default:"— Sin descripción —" }}
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="row small text-muted">
+                    <div class="col-6">
+                        <strong>Creado:</strong><br>
+                        {{ producto.creado_en|date:"d/m/Y H:i" }}
+                    </div>
+                    <div class="col-6">
+                        <strong>Actualizado:</strong><br>
+                        {{ producto.actualizado_en|date:"d/m/Y H:i" }}
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="d-flex gap-2">
+                    <a href="{% url 'core:editar_producto' producto.pk %}" class="btn btn-outline-primary flex-grow-1">
+                        ✏️ Editar
+                    </a>
+                    <a href="{% url 'core:eliminar_producto' producto.pk %}" class="btn btn-outline-danger flex-grow-1">
+                        🗑️ Eliminar
+                    </a>
+                    <a href="{% url 'core:lista_productos' %}" class="btn btn-outline-secondary">
+                        ← Volver
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

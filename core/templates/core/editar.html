@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Editar Producto{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">✏️ Editar: {{ producto.nombre }}</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    <!-- Errores globales del formulario (no ligados a un campo específico) -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger mb-3">
+                            {% for error in form.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.nombre.id_for_label }}" class="form-label">
+                            {{ form.nombre.label }} <span class="text-danger">*</span>
+                        </label>
+                        {{ form.nombre }}
+                        {% if form.nombre.errors %}
+                            <div class="text-danger small mt-1">{{ form.nombre.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.descripcion.id_for_label }}" class="form-label">
+                            {{ form.descripcion.label }}
+                        </label>
+                        {{ form.descripcion }}
+                        {% if form.descripcion.errors %}
+                            <div class="text-danger small mt-1">{{ form.descripcion.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.precio.id_for_label }}" class="form-label">
+                                {{ form.precio.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.precio }}
+                            {% if form.precio.errors %}
+                                <div class="text-danger small mt-1">{{ form.precio.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.stock.id_for_label }}" class="form-label">
+                                {{ form.stock.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.stock }}
+                            {% if form.stock.errors %}
+                                <div class="text-danger small mt-1">{{ form.stock.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-check form-switch">
+                        {{ form.activo }}
+                        <label class="form-check-label" for="{{ form.activo.id_for_label }}">
+                            {{ form.activo.label }}
+                        </label>
+                        {% if form.activo.errors %}
+                            <div class="text-danger small mt-1">{{ form.activo.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-warning flex-grow-1">
+                            💾 Actualizar
+                        </button>
+                        <a href="{% url 'core:lista_productos' %}" class="btn btn-outline-secondary">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
