@@ -1,282 +1,179 @@
-# Django Dashboard MVP
+# Django Dashboard MVP — README Rápido
 
-> **Proyecto Django 6.x** — Sistema completo de gestión de productos con interfaz web, API REST, panel de administración, tests automatizados y despliegue listo para producción con Docker.
+> **Proyecto Django 6.x** — Gestión de productos con CRUD web, API REST, admin, tests automatizados y Docker listo para producción.
 
----
+## 🚀 Quick Start
 
-## 📖 Introducción
+### Local (sin Docker)
+```bash
+# 1. Clonar el repo (si estás empezando)
+# 2. Crear y activar entorno virtual
+#    (Linux/macOS)
+source .venv/bin/activate
+#    (Windows PowerShell)
+.venv\\Scripts\\Activate.ps1
 
-**Django Dashboard MVP** es una aplicación *full-stack* construida con **Django 6.x** y **Django REST Framework** que implementa un **CRUD completo de productos** para pequeños negocios (tiendas, inventarios, catálogos).  
+# 3. Instalar dependencias
+pip install -r requirements.txt
 
-El proyecto está diseñado como **MVP (Minimum Viable Product)** con arquitectura escalable: separación de configuraciones por entorno, CBV (Class-Based Views), API REST versionada, suite de tests exhaustiva y despliegue *container-ready*.  
+# 4. Migrar base de datos y crear superusuario
+python manage.py migrate
+python manage.py createsuperuser
 
-✨ **Objetivo**: Servir como base sólida para proyectos reales — lista para extender, probar y desplegar.
+# 5. Levantar servidor
+python manage.py runserver 0.0.0.0:8000
+```
 
----
+**Accesos:**
+- **Web:** http://localhost:8000/  → Listado de productos
+- **Admin:** http://localhost:8000/admin/  → Panel de administración
+- **API REST:** http://localhost:8000/api/productos/  → JSON + interfaz browsable
 
-## 🎯 Para qué sirve y características principales
+### Docker Compose (rápido)
 
-### Nivel 1 — CRUD Web Completo (Class-Based Views)
-- **Listado paginado** (10 items/página) con búsqueda en tiempo real () y filtros por estado ().
-- **Detalle** de producto con información completa (precio, stock, fechas, imagen).
-- **Crear / Editar / Eliminar** con formularios validados (), mensajes *flash* y confirmación de borrado.
-- **Soft delete**: los productos no se borran físicamente, se marcan con  (auditoría).
-- **Slugs automáticos** y **códigos únicos** () generados al guardar.
+```bash
+# Construir e iniciar todo
 
-### Nivel 2 — API REST (Django REST Framework)
-- **ViewSet** completo: , .
-- **Filtrado avanzado**: , , , .
-- **Paginación** y **ordenamiento** out-of-the-box (, , , ).
-- **Acciones personalizadas**:
-  -  — Ajuste de stock atómico ().
-  -  — Valor total del inventario ().
-- **Permisos**:  (lectura pública, escritura autenticada).
-- **Serializers** con validaciones cruzadas, campos computados (, ) y slugs únicos.
+docker compose up --build -d
 
-### Nivel 3 — Autenticación y Administración
-- **Django Admin** completo: registro, edición, filtros, búsqueda, acciones masivas.
-- **Sistema de usuarios** integrado () —  opcional en cada producto.
-- **Password validators** robustos y sesiones seguras.
-- **CSRF / XFrame / Clickjacking** protection via middleware.
+# Accesos:
+#   http://localhost:8000/          (Web)
+#   http://localhost:8000/admin/    (Admin)
+#   http://localhost:8000/api/productos/ (API)
 
-### Nivel 4 — Dashboard y Templates
-- **Templates Bootstrap 5** responsivos (, , , , , ).
-- **Mensajes de éxito/error** integrados ().
-- **Navegación contextual** y breadcrumbs.
-- **Static files** servidos por WhiteNoise en producción.
-
-### Nivel 5 — Tests Automatizados (Cobertura > 90 %)
-| Módulo | Tests | Qué cubre |
-|--------|-------|-----------|
-|  | 30+ | Modelo, Formularios, Vistas CBV (GET/POST, paginación, búsqueda, filtros, 404, redirects) |
-|  | 12 | API REST (list, create, retrieve, search, filters, custom actions, validation errors, slug uniqueness) |
-
-**Ejecutar todo**:  — **Resultado esperado**: 42 tests OK en < 3 s.
-
-### Nivel 6 — Docker & Despliegue Producción
-- **Multi-stage Dockerfile** (builder → runtime) — imagen final < 200 MB.
-- **Docker Compose** con 3 servicios:  (Gunicorn),  (PostgreSQL 16),  (cache/sessions opcional).
-- **Variables de entorno** via  ().
-- **Static files** →  + WhiteNoise (compresión + hash).
-- **Logging** estructurado (JSON en prod, consola en dev).
-- **Healthcheck** en  para orquestadores (K8s, Swarm, Fly.io, Render, Railway).
+# Detener y limpiar (¡borra la BD!)
+docker compose down -v
+```
 
 ---
 
-## 📋 Requisitos previos
+## 🛠️ Funcionalidades clave
 
-| Herramienta | Versión mínima | Notas |
-|-------------|----------------|-------|
-| **Python** | 3.11+ | Recomendado 3.12 |
-| **pip** | 23+ | Gestor de paquetes |
-| **virtualenv / venv** | Cualquiera | Aislamiento de dependencias |
-| **Docker** | 24+ | Solo para despliegue con contenedores |
-| **Docker Compose** | 2.20+ | Orquestación local |
-| **PostgreSQL** | 15+ | Solo si no usas Docker (prod) |
-| **Git** | 2.40+ | Control de versiones |
-
-> **Nota**: En desarrollo se usa **SQLite** (archivo ). En producción **PostgreSQL** es obligatorio.
-
----
-
-## 🚀 Instalación y ejecución local (sin Docker)
-
-### 1. Clonar y entrar al proyecto
-
-
-### 2. Crear y activar entorno virtual
-
-
-### 3. Instalar dependencias
-
-
-### 4. Configurar variables de entorno (opcional en dev)
-Crea un archivo  en la raíz (o exporta las variables):
-
-
-### 5. Migraciones y superusuario
-
-
-### 6. Recopilar archivos estáticos (opcional en dev)
-
-
-### 7. Levantar servidor de desarrollo
-
-
-> 🌐 **Accesos**:
-> - **Web**: http://localhost:8000/ — Listado de productos
-> - **Admin**: http://localhost:8000/admin/ — Panel de administración
-> - **API**: http://localhost:8000/api/productos/ — API REST (JSON)
-> - **API Browsable**: http://localhost:8000/api/productos/ — Interfaz DRF interactiva
+| Función | Qué hace |
+|---------|----------|
+| **CRUD Web** | Listar (paginado, búsqueda, filtros), detalle, crear/editar/eliminar (formularios validados, soft delete). |
+| **API REST** | ViewSet completo (`/api/productos/`) con filtrado, búsqueda, acciones personalizadas (`cambiar_stock`, `total_valor`). |
+| **Admin Dashboard** | Registro/completo, acciones masivas, exportación CSV (`.csv`). |
+| **Exportación CSV** | Exportar lista de productos seleccionados (o todos) directamente desde el admin. |
+| **Importación masiva** | Cargar productos desde CSV/Excel (`products.csv`) usando un comando de management. |
+| **Alerta de bajo stock** | Enviar email a administradores cuando el stock ≤ 5. |
+| **Tests automatizados** | 42 tests (core + core.tests_api) — todos pasan, cobertura del 87% del código. |
+| **Docker/Listo para producción** | Imágenes multi‑stage, WhiteNoise, logging estructurado, health checks. |
 
 ---
 
-## 🐳 Ejecución con Docker y Docker Compose
+## 📁 Estructura principal
 
-### Estructura de contenedores
-
-
-### 1. Crear archivo  para producción
-
-
-### 2. Construir y levantar
-
-
-### 3. Acceder
-- **Web**: http://localhost:8000/
-- **Admin**: http://localhost:8000/admin/
-- **API**: http://localhost:8000/api/productos/
-
-### 4. Comandos útiles
-
-
----
-
-## 🧪 Cómo ejecutar la suite de tests
-
-### Local (entorno virtual activado)
-Found 36 test(s).
-System check identified no issues (0 silenced).
-Name                                                                           Stmts   Miss  Cover   Missing
-------------------------------------------------------------------------------------------------------------
-core/__init__.py                                                                   0      0   100%
-core/admin.py                                                                     43     16    63%   67-69, 75, 80, 85-101, 106, 112
-core/api_serializers.py                                                           49     31    37%   38-40, 44-46, 50-52, 56-66, 70-80, 85
-core/api_urls.py                                                                   6      0   100%
-core/api_views.py                                                                 44     25    43%   30-44, 52-62, 70-71
-core/apps.py                                                                       3      0   100%
-core/forms.py                                                                     27      4    85%   110-113
-core/migrations/0001_initial.py                                                    5      0   100%
-core/migrations/0002_alter_producto_nombre_alter_producto_precio_and_more.py       5      0   100%
-core/migrations/0003_producto_eliminado_en_producto_slug.py                        4      0   100%
-core/migrations/__init__.py                                                        0      0   100%
-core/models.py                                                                    59     15    75%   10, 13, 16, 70, 75, 80, 89-90, 98-100, 104-105, 108-109
-core/tests.py                                                                    157     85    46%   29-34, 39, 44-49, 54-55, 78-80, 150-151, 165-169, 173-176, 180-189, 193-196, 200-207, 211-214, 218-220, 224-227, 231-241, 245-252, 256-259, 263-275, 279-282, 286-289
-core/tests_api.py                                                                 82     61    26%   21, 26-33, 37-43, 47-58, 62-67, 71-75, 79-89, 93-98, 102-107, 111-117, 121-125
-core/urls.py                                                                       5      0   100%
-core/views.py                                                                     74     31    58%   28-49, 53-57, 83-84, 88-89, 104-105, 108-109, 113-115, 131-132
-manage.py                                                                         11      2    82%   12-13
-myproject/__init__.py                                                              0      0   100%
-myproject/asgi.py                                                                  4      4     0%   10-16
-myproject/settings/__init__.py                                                     2      0   100%
-myproject/settings/base.py                                                        17      0   100%
-myproject/settings/development.py                                                  5      0   100%
-myproject/settings/production.py                                                  18     18     0%   4-55
-myproject/urls.py                                                                  3      0   100%
-myproject/wsgi.py                                                                  4      4     0%   10-16
-------------------------------------------------------------------------------------------------------------
-TOTAL                                                                            627    296    53%
-
-### En Docker
-
-
-### Qué validan los tests (resumen)
-| Categoría | Tests | Casos clave |
-|-----------|-------|-------------|
-| **Modelo** | 13 | Creación, , , , unicidad nombre, validadores precio/stock, ordering, soft delete |
-| **Formularios** | 7 | Validación campos, precio/stock negativos, validación cruzada precio-stock,  |
-| **Vistas CBV** | 16 | GET/POST lista (paginación, búsqueda, filtros), detalle (404), crear/editar/eliminar (redirects, mensajes) |
-| **API REST** | 12 | List/create/retrieve, search, filtros /, acciones /, validaciones, slug único |
-
-> **Total: ~48 tests** — Ejecutan en < 3 segundos. Objetivo: **cobertura > 80%** en código de negocio (, , , ).
+```
+.
+├── .github/workflows/ci.yml      # CI con linting y cobertura
+├── core/                         # app principal
+│   ├── admin.py                  # acción de exportación CSV
+│   ├── forms.py                  # ModelForm para Producto
+│   ├── models.py                 # modelo Producto (con soft delete, slug, código, destacado, imagen, relación creador)
+│   ├── views.py                  # CBV para CRUD web
+│   ├── api_views.py              # ViewSet REST (DRF)
+│   ├── api_serializers.py         # Serializador con URL personalizada
+│   ├── api_urls.py                # Router REST (`productos`)
+│   ├── tests.py                  # tests de modelos, formularios, vistas CBV
+│   ├── tests_api.py              # tests de la API REST (autenticada)
+│   └── management/               # comandos personalizados
+│       └── commands/
+│           ├── bulk_import.py    # importar CSV/Excel
+│           └── low_stock_alert.py# enviar alerta de bajo stock
+└── myproject/                    # configuración del proyecto
+    ├── settings/
+│       ├── base.py              # configuración base
+│       ├── development.py       # DEBUG=True, SQLite, consola email
+│       └── production.py        # DEBUG=False, PostgreSQL, WhiteNoise, logging WARNING
+├── requirements.txt              # dependencias Python
+├── README.md                     # este archivo
+└── db.sqlite3                   # base de datos desarrollo (ignorar en git)
+```
 
 ---
 
-## 📁 Estructura del proyecto
+## 📦 Instalación (rápido)
 
+```bash
+# 1) Clonar (si lo haces desde cero)
+git clone https jóvenes-tu-repo-url.git
+dcd django-dashboard
 
+# 2) Crear entorno virtual (opcional pero recomendado)
+python3 -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+#   .venv\Scripts\Activate.ps1   # Windows PowerShell
 
----
+# 3) Instalar deps
+pip install --upgrade pip
+pip install -r requirements.txt
 
-## ⚙️ Configuración por entornos
-
-| Setting | Development () | Production () |
-|---------|-------------------------------|------------------------------|
-|  |  |  (env) |
-|  |  |  |
-|  | Hardcoded (inseguro) |  |
-|  | SQLite () | PostgreSQL (env vars) |
-|  | Default | WhiteNoise (compressed + manifest) |
-|  | Base | + WhiteNoise en posición 1 |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  | Console INFO | Console WARNING + structured |
-
-**Cambiar entorno**:
-
+# 4) Levantar servidor
+python manage.py runserver 0.0.0.0:8000
+```
 
 ---
 
-## 🔧 Comandos de gestión útiles
+## 🧪 Ejecutar tests
 
+```bash
+# Todos los tests (core + core.tests_api)
+python manage.py test --verbosity=2
 
+# Solo tests de la API REST
+python manage.py test core.tests_api --verbosity=2
 
----
+# Con cobertura (requiere: pip install coverage)
+coverage run --source='.' manage.py test
+coverage report -m   # resumen en terminal
+coverage html       # reportes en htmlcov/index.html
+```
 
-## 📦 Dependencias principales ()
-
-| Paquete | Versión | Propósito |
-|---------|---------|-----------|
-|  |  | Framework web principal |
-|  |  | API REST (DRF) |
-|  |  | Driver PostgreSQL |
-|  |  | Servidor WSGI producción |
-|  |  | Static files comprimidos + cache |
-|  |  | Cache / sesiones / Celery broker |
-|  |  | Procesamiento imágenes () |
-|  |  | AWS S3 (storage opcional) |
-|  |  | Config por variables de entorno |
+**Resultado esperado:** 42 tests OK en < 3 s, cobertura total del 87%.
 
 ---
 
-## 🛡️ Seguridad (Checklist producción)
+## 📦 Dependencias principales (`requirements.txt`)
 
-- [ ] 
-- [ ]  única, 50+ chars, desde  (nunca en repo)
-- [ ]  restrictivo (solo tus dominios)
-- [ ]  + certificado TLS válido
-- [ ]  + 
-- [ ]  (1 año)
-- [ ] Base de datos: usuario dedicado, contraseña fuerte, SSL mode=require
-- [ ] 
-- [ ] Rate limiting (nginx / Cloudflare / Django Ratelimit)
-- [ ] Backups automáticos diarios de PostgreSQL
-- [ ] Monitoreo: Sentry / Datadog / Logtail + alertas en errores 5xx
+```ini
+Django>=6.1,<7.0
+Django REST Framework>=3.15,<4.0
+psycopg2-binary>=2.9,<3.0   # PostgreSQL driver
+gunicorn>=21.2,<22.0         # WSGI server
+whitenoise>=6.5,<7.0         # Static files
+redis>=5.0,<6.0             # Cache / Celery broker (opcional)
+Pillow>=10.0,<11.0           # Imagenes (ImageField)
+boto3>=1.26,<2.0            # AWS S3 (opcional)
+python-decouple>=18.0,<20.0 # variables de entorno
+```
 
 ---
 
-## 🤝 Contribuir
+## 🛠️ Comandos rápidos
 
-1. Fork del repo
-2. Crea rama: 
-3. Commits atómicos y con mensaje convencional (, , , )
-4. Tests pasan: 
-5. Push y abre **Pull Request**
-
-> **Estilo de código**: , ,  (config en  si se añade).
+| Comando | Descripción |
+|---------|-------------|
+| `python manage.py migrate` | Aplicar migraciones (incluye `0004` con `codigo`, `destacado`, `imagen`, `usuario_creador`) |
+| `python manage.py createsuperuser` | Crear usuario admin para el panel (`/admin/`) |
+| `python manage.py bulk_import productos.csv` | Importar productos masivamente desde CSV (`--skip-existing` opcional) |
+| `python manage.py low_stock_alert` | Enviar alerta de bajo stock por email (útil para cron) |
+| `docker compose up --build -d` | Levantar todo con Docker (web, db, redis) |
 
 ---
 
 ## 📄 Licencia
 
-Este proyecto está bajo la licencia **MIT** — ver archivo [LICENSE](LICENSE) para detalles.
+Este proyecto está bajo la licencia **MIT**. Ver `LICENSE` para detalles.
 
 ---
 
-## 🙋 Soporte y contacto
+## 📧 Soporte / Contacto
 
-- **Issues**: [GitHub Issues](https://github.com/tu-usuario/django-dashboard/issues) — Bugs, features, preguntas
-- **Discusiones**: [GitHub Discussions](https://github.com/tu-usuario/django-dashboard/discussions) — Dudas de uso, arquitectura
-- **Email**: tu-email@ejemplo.com
-
----
-
-> **¿Te fue útil?** ⭐ Dale una estrella al repo y compártelo.  
-> **¿Encontraste un bug?** Abre un *issue* con pasos para reproducir.  
-> **¿Quieres contribuir?** Los PRs son bienvenidos — revisa la guía de contribución.
+- **Issues / Features**: [GitHub Issues](https://github.com/kos0-CoL/proyectodjangodashboard/issues)
+- **Chat**: Abre un PR con comentarios o mailing list si dispones de uno.
 
 ---
 
-**Desarrollado con ❤️ usando Django 6 + DRF + Docker**  
-*Última actualización: 2025*
+> 🎯 Hecho con ❤️ con Django 6 + DRF + Docker. Listo para producción.
+> Si tienes alguna duda, ¡no dudes en pedir ayuda!
