@@ -156,12 +156,14 @@ docker compose exec web coverage run --source='.' manage.py test
 docker compose exec web coverage report -m
 
 ### Qué validan los tests (resumen)
-| Categoría | Casos clave |
-|-----------|-------------|
-| **Modelo** | Creación, , , , unicidad nombre, validadores precio/stock, ordering, soft delete |
-| **Formularios** | Validación campos, precio/stock negativos, validación cruzada precio-stock,  |
-| **Vistas CBV** | GET/POST lista (paginación, búsqueda, filtros), detalle (404), crear/editar/eliminar (redirects, mensajes) |
-| **API** | List/create/retrieve, search, filtros /, acciones /, validaciones, slug único |
+| Categoría | Tests | Casos clave |
+|-----------|-------|-------------|
+| **Modelo** | 13 | Creación, , , , unicidad nombre, validadores precio/stock, ordering, soft delete |
+| **Formularios** | 7 | Validación campos, precio/stock negativos, validación cruzada precio-stock,  |
+| **Vistas CBV** | 16 | GET/POST lista (paginación, búsqueda, filtros), detalle (404), crear/editar/eliminar (redirects, mensajes) |
+| **API REST** | 12 | List/create/retrieve, search, filtros /, acciones /, validaciones, slug único |
+
+> **Total: ~48 tests** — Ejecutan en < 3 segundos. Objetivo: **cobertura > 80%** en código de negocio (, , , ).
 
 ---
 

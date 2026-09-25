@@ -13,7 +13,7 @@ class ProductoSerializer(serializers.ModelSerializer):
     hay_stock = serializers.SerializerMethodField()
     creado_en = serializers.DateTimeField(read_only=True)
     actualizado_en = serializers.DateTimeField(read_only=True)
-    url = serializers.HyperlinkedIdentityField(view_name='core:detalle_producto_slug')
+    url = serializers.SerializerMethodField()
 
     class Meta:
         model = Producto
@@ -83,3 +83,10 @@ class ProductoSerializer(serializers.ModelSerializer):
     def get_hay_stock(obj):
         """Método para el campo hay_stock."""
         return obj.stock > 0
+
+    def get_url(self, obj):
+        """URL absoluta del detalle del producto en la API."""
+        request = self.context.get('request')
+        if request:
+            return request.build_absolute_uri(f'/api/productos/{obj.pk}/')
+        return f'/api/productos/{obj.pk}/'
